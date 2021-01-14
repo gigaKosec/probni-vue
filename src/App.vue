@@ -1,19 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1> TESTNO</h1>
+      
+      
+        <ValidationObserver v-slot="{ handleSubmit}">
+            <form @submit.prevent="handleSubmit(sendForm)">
+              <ValidationProvider rules="required|isPhoneNumber:SI" v-slot="{ errors }" name="tel">
+              <div> Prosim, vnesi mobilno številko</div>
+              <input v-model="tel" type="text">
+              <p> {{ errors [0]}}</p>
+              
+              <!-- <ul>
+              <li>Ali je valid? = {{valid}}</li>
+              <li>Ali je changed? = {{changed}} </li>
+              </ul> -->
+              </ValidationProvider>
+              <button type="submit">pošlji</button>
+            </form>
+        </ValidationObserver>
+        
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+/* import parsePhoneNumber from "libphonenumber-js/mobile" */
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ValidationProvider,
+    ValidationObserver
+  },
+  data: function () {
+    return {
+      tel: "",
+    
+
+
+    }
+  },
+  methods:{
+    sendForm () {
+      alert("Obrazec poslan; payload: tel = "+ this.tel)
+    },
+    /* preveriCifro () {
+      parsePhoneNumber(1,"SI")
+      console.log("preveril cifro")
+    } */
+
   }
+
 }
+
 </script>
 
 <style>
